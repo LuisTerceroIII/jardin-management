@@ -17,6 +17,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("management/jardin-api/v1/garment")
+@CrossOrigin("*")
 public class GarmentController {
 
     private final GarmentRepository garmentRepo;
@@ -61,6 +62,12 @@ public class GarmentController {
         }
 
         return new ResponseEntity<>(garment,HttpStatus.CREATED);
+    }
+
+    @PostMapping("/post")
+    private ResponseEntity<Garment> createGarment (@RequestBody Garment garment) {
+        Garment save = garmentRepo.save(garment);
+        return new ResponseEntity<>(save,HttpStatus.CREATED);
     }
 
     @PatchMapping("/{id}")

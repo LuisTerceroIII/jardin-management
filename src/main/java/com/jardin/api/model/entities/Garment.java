@@ -1,4 +1,5 @@
 package com.jardin.api.model.entities;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -6,6 +7,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "garment", schema = "public")
 @EntityListeners(AuditingEntityListener.class)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Garment {
 
     @Id
@@ -28,7 +30,7 @@ public class Garment {
     @Column(name = "main_material", nullable = false)
     private String mainMaterial;
 
-    @Column(name = "madeIn")
+    @Column(name = "made_in")
     private String madeIn;
 
     @Column(name = "price", nullable = false)
