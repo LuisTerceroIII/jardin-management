@@ -32,7 +32,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .cors().and().csrf().disable()
+                .cors().and().csrf().disable()// cors y crsf desactivos para conectar dos servicios en maquina local, desactivar en produccion
                 .authorizeRequests()
                 .antMatchers("/management/jardin-api/**").hasRole(ApplicationUserRoles.ADMIN.name())
                 .anyRequest()

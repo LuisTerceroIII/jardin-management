@@ -1,18 +1,14 @@
 package com.jardin.api.services;
 
-import com.jardin.api.model.entities.User;
 import com.jardin.api.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
-import javax.crypto.*;
-import javax.crypto.spec.*;
-import java.util.Optional;
 
 @Service
 public class AuthenticationService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     private AuthenticationService(UserRepository userRepository) {

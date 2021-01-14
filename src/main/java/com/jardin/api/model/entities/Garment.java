@@ -42,6 +42,17 @@ public class Garment {
     public Garment() {
     }
 
+    public Garment(String type, String size, String mainColor, String gender, String mainMaterial, String madeIn, Integer price, String comment) {
+        this.type = type;
+        this.size = size;
+        this.mainColor = mainColor;
+        this.gender = gender;
+        this.mainMaterial = mainMaterial;
+        this.madeIn = madeIn;
+        this.price = price;
+        this.comment = comment;
+    }
+
     public Garment(String comment) {
         this.comment = comment;
     }

@@ -6,8 +6,15 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
+
+
 
 public interface GarmentRepository extends JpaRepository<Garment,Long> {
+
+    //SELECTS
+    @Query(nativeQuery = true,value = "SELECT * from Garment g order by g.id LIMIT :limit OFFSET :offset")
+    List<Garment> getGarmentWithPagination(@Param("limit") Integer limit, @Param("offset") Integer offset);
 
     // UPDATES
     @Modifying
@@ -23,4 +30,5 @@ public interface GarmentRepository extends JpaRepository<Garment,Long> {
                    @Param("comment") String comment,
                    @Param("price") Integer price);
                     // CAMBIAR TODOS LOS ATRIBUTOS DE PRODUCTO, SALVO SU ID.
+
 }

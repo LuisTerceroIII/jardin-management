@@ -1,0 +1,48 @@
+{
+	"name" : "Luis",
+	"lastname" : "Espinoza",
+	"email": "luis.espinoza.nav@protonmail.com",
+	"address": "Calle Presidente Derqui, La Lonja, Pilar",
+	"username": "LuisTerceroIII",
+	"password": "1234Pas"
+}
+
+
+users : {
+	
+	user1: {
+	
+		"username": "LuisTerceroIII",
+		"password": "1234Pas"
+	},
+
+	user2: {
+	
+		"username": "CabelleroDeLaNoche",
+		"password": "batman"
+
+	}
+}
+
+
+
+
+heroku pg:killall
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/RQBPJDk/favicon-32x32.png" alt="favicon-32x32" border="0"></a>
