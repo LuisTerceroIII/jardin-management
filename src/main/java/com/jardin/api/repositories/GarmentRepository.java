@@ -31,4 +31,7 @@ public interface GarmentRepository extends JpaRepository<Garment,Long> {
                    @Param("price") Integer price);
                     // CAMBIAR TODOS LOS ATRIBUTOS DE PRODUCTO, SALVO SU ID.
 
+
+
+
 }

@@ -229,4 +229,17 @@ public class GarmentController {
             return new ResponseEntity<>(new Garment(), HttpStatus.NOT_FOUND);
         }
     }
+
+    @PostMapping("/delete/{id}")
+    @CrossOrigin(origins=reactURL)
+    private ResponseEntity<Garment> deleteGarmentById(@PathVariable("id") Long id) {
+        try {
+            Garment garmentToDelete = garmentRepo.getOne(id);
+            System.out.println(garmentToDelete); // Imprimo el recurso para hacer saltar la excepcion de ID NO EXISTENTE
+            garmentRepo.deleteById(id);
+            return new ResponseEntity<>(garmentToDelete,HttpStatus.ACCEPTED);
+        } catch (EntityNotFoundException exception) {
+            return new ResponseEntity<>(new Garment("","","","","","",0,""),HttpStatus.NOT_FOUND);
+        }
+    }
 }
