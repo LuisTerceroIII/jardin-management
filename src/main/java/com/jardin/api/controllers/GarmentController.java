@@ -1,5 +1,6 @@
 package com.jardin.api.controllers;
 
+import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jardin.api.buckets.BucketName;
 import com.jardin.api.exceptions.controllerExceptions.BadRequestException;
@@ -8,6 +9,7 @@ import com.jardin.api.repositories.GarmentRepository;
 import com.jardin.api.services.GarmentService;
 import com.jardin.api.services.S3FileStore;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -47,15 +50,24 @@ public class GarmentController {
 
     @CrossOrigin(origins = reactURL)
     @GetMapping("/{id}")
-    private ResponseEntity<Garment> getById(@PathVariable("id") Long id) {
-        try {
-            Garment garment = garmentRepo.getOne(id);
-            System.out.println(garment); // Si imprimo el garment y el id no retorno ninguno salta EntityNotFoundException
-            return new ResponseEntity<>(garment, HttpStatus.ACCEPTED);
-        } catch (EntityNotFoundException exception) {
-            System.out.println(exception.getMessage());
-            return new ResponseEntity<>(new Garment("","","","","","",0,""),HttpStatus.NOT_FOUND);
+    private ResponseEntity<Garment> getById(@PathVariable("id") Long id, HttpServletResponse res) {
+        String isTokenValidString = res.getHeader("isTokenValid");
+        boolean isTokenValid = Boolean.parseBoolean(isTokenValidString);
+        System.out.println(isTokenValid);
+        if(isTokenValid) {
+            try {
+                Garment garment = garmentRepo.getOne(id);
+                System.out.println(garment); // Si imprimo el garment y el id no retorno ninguno salta EntityNotFoundException
+                return new ResponseEntity<>(garment, HttpStatus.ACCEPTED);
+            } catch (EntityNotFoundException exception) {
+                System.out.println(exception.getMessage());
+                return new ResponseEntity<>(new Garment("","","","","","",0,""),HttpStatus.NOT_FOUND);
+            }
+        } else {
+            return new ResponseEntity<>(new Garment("","","","","","",0,""),HttpStatus.UNAUTHORIZED);
         }
+
+
     }
 
     @GetMapping("pageable/{limit}/{offset}")

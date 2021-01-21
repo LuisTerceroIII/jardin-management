@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import javax.transaction.Transactional;
+import java.util.UUID;
 
 @SpringBootApplication
 @EnableJpaAuditing
@@ -28,9 +29,6 @@ public class ApiApplication implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) throws Exception {
-
-
-
 
     }
 }

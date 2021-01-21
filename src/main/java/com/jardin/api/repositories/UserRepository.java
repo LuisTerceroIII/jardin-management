@@ -21,4 +21,9 @@ public interface UserRepository extends JpaRepository<User,Long> {
     @Query(nativeQuery = true, value = "update \"user\" set online = :online where id = :id")
     @Transactional
     void updateOnlineStatus(@Param("online") boolean online, @Param("id") Long id);
+
+    @Modifying
+    @Query(nativeQuery = true, value = "update \"user\" set sessiontoken = :sessionToken where id = :id")
+    @Transactional
+    void updateSessionToken(@Param("sessionToken") String sessionToken, @Param("id") Long id);
 }
