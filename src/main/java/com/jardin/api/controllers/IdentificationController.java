@@ -1,8 +1,12 @@
 package com.jardin.api.controllers;
 
 import com.jardin.api.model.entities.User;
+import com.jardin.api.model.entities.pojos.post.UserToLogout;
+import com.jardin.api.model.responses.LoginResponse;
 import com.jardin.api.repositories.UserRepository;
 import com.jardin.api.services.AuthenticationService;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +14,10 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("management/jardin-api/v1")
@@ -40,44 +48,33 @@ public class IdentificationController {
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
 
     }
-
     @PostMapping("/login")
     @CrossOrigin(origins = "http://localhost:3000")
-    private ResponseEntity<Boolean> login(@RequestBody User user) {
+    private ResponseEntity<LoginResponse> loginWithToken(@RequestBody User user) {
+
+        LoginResponse errorResponse = new LoginResponse(false,"0");
 
         User registerUser = userRepository.getUserByUsername(user.getUsername());
+
         if (registerUser == null) {
-            return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
         }
+
         boolean correctPassword = BCrypt.checkpw(user.getPassword(), registerUser.getPassword());
 
-        if (correctPassword && registerUser.getOnline()) { // desconecto por reconeccion de usuario logeado.
+        if (correctPassword) {
+            String secretKey = "asegurandoJardinAPI2021LuisHECTOResPINOZAnaVaRRete9488888";
+            String sessionToken = Jwts.builder()
+                    .setSubject("Jardin")
+                    .setIssuedAt(new Date())
+                    .setExpiration(java.sql.Date.valueOf(LocalDate.now().plusDays(1)))
+                    .signWith(Keys.hmacShaKeyFor(secretKey.getBytes()))
+                    .compact();
 
-            return new ResponseEntity<>(false, HttpStatus.CONFLICT); //409
-
-        } else if (correctPassword && !registerUser.getOnline()) {
-
-            userRepository.updateOnlineStatus(true, registerUser.getId());
-
-            return new ResponseEntity<>(true, HttpStatus.ACCEPTED);
+            LoginResponse loginResponse = new LoginResponse(true,sessionToken);
+            return new ResponseEntity<>(loginResponse, HttpStatus.ACCEPTED);
         }
-        return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
-
-    @PostMapping("/logout")
-    @CrossOrigin(origins = "http://localhost:3000")
-    private ResponseEntity<Boolean> logout(@RequestBody User user) {
-        User registerUser = userRepository.getUserByUsername(user.getUsername());
-        if (registerUser == null) {
-            return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
-        }
-        boolean correctPassword = BCrypt.checkpw(user.getPassword(), registerUser.getPassword());
-
-        if (correctPassword && registerUser.getOnline()) { // desconecto por reconeccion de usuario logeado.
-            userRepository.updateOnlineStatus(false, registerUser.getId());
-            return new ResponseEntity<>(true, HttpStatus.OK); //200
-        }
-        return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
-    }
 }

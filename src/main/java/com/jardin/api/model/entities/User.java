@@ -32,8 +32,6 @@ public class User {
     @Column(name="password")
     private String password;
 
-    @Column(name = "online")
-    private Boolean online;
 
     public User() {
     }
@@ -118,13 +116,8 @@ public class User {
         this.password = password;
     }
 
-    public Boolean getOnline() {
-        return online;
-    }
 
-    public void setOnline(Boolean online) {
-        this.online = online;
-    }
+
 
     @Override
     public String toString() {

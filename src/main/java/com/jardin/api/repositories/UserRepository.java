@@ -16,9 +16,4 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
     @Query("select u from User u where u.username = :username")
     User getUserByUsername(@Param("username") String username);
-
-    @Modifying
-    @Query(nativeQuery = true, value = "update \"user\" set online = :online where id = :id")
-    @Transactional
-    void updateOnlineStatus(@Param("online") boolean online, @Param("id") Long id);
 }
