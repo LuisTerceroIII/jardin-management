@@ -32,11 +32,6 @@ public class User {
     @Column(name="password")
     private String password;
 
-    @Column(name = "online")
-    private Boolean online;
-
-    @Column(name = "sessionToken")
-    private String sessionToken;
 
     public User() {
     }
@@ -121,21 +116,8 @@ public class User {
         this.password = password;
     }
 
-    public Boolean getOnline() {
-        return online;
-    }
 
-    public void setOnline(Boolean online) {
-        this.online = online;
-    }
 
-    public String getSessionToken() {
-        return sessionToken;
-    }
-
-    public void setSessionToken(String sessionToken) {
-        this.sessionToken = sessionToken;
-    }
 
     @Override
     public String toString() {
@@ -147,8 +129,6 @@ public class User {
                 ", address='" + address + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", online=" + online +
-                ", sessionToken='" + sessionToken + '\'' +
                 '}';
     }
 }
