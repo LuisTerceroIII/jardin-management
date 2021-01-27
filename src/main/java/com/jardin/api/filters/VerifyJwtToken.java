@@ -70,7 +70,7 @@ public class VerifyJwtToken extends OncePerRequestFilter {
     }*/
 @Override
 protected boolean shouldNotFilter(HttpServletRequest request)  throws ServletException {
-    return new AntPathMatcher().match("/management/jardin-api/v1/loginToken", request.getServletPath());
+    return new AntPathMatcher().match("/management/jardin-api/v1/login", request.getServletPath());
 }
 
     @Override
@@ -94,6 +94,7 @@ protected boolean shouldNotFilter(HttpServletRequest request)  throws ServletExc
                 System.out.println("token session expired");
                 res.setHeader("isTokenValid", "false");
             } catch (JwtException e) {
+                System.out.println(e.getMessage());
                 System.out.println("Dentro de TOKEN NO VALIDO !!!!!!!!");
             }
         } else {

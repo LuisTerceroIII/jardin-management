@@ -1,7 +1,9 @@
 package com.jardin.api;
 
 import com.jardin.api.model.entities.Garment;
+import com.jardin.api.model.entities.Images;
 import com.jardin.api.repositories.GarmentRepository;
+import com.jardin.api.repositories.ImagesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -21,6 +23,9 @@ public class ApiApplication implements CommandLineRunner {
 
     @Autowired
     GarmentRepository garmentRepo;
+
+    @Autowired
+    ImagesRepository imagesRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(ApiApplication.class, args);

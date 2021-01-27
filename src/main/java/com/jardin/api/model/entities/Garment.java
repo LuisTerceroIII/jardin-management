@@ -36,11 +36,17 @@ public class Garment {
     @Column(name = "price", nullable = false)
     private Integer price;
 
-    @Column(name = "comment", nullable = true)
+    @Column(name = "comment")
     private String comment;
+
+    @OneToOne()
+    @JoinColumn(name ="images_id")
+    private Images images;
 
     public Garment() {
     }
+
+
 
     public Garment(String type, String size, String mainColor, String gender, String mainMaterial, String madeIn, Integer price, String comment) {
         this.type = type;
@@ -93,9 +99,6 @@ public class Garment {
         return comment;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public void setType(String type) {
         this.type = type;
@@ -129,6 +132,14 @@ public class Garment {
         this.comment = comment;
     }
 
+    public Images getImages() {
+        return images;
+    }
+
+    public void setImages(Images images) {
+        this.images = images;
+    }
+
     @Override
     public String toString() {
         return "Garment{" +
@@ -141,6 +152,7 @@ public class Garment {
                 ", madeIn='" + madeIn + '\'' +
                 ", price=" + price +
                 ", comment='" + comment + '\'' +
+                ", images=" + images +
                 '}';
     }
 }

@@ -33,7 +33,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .cors().and().csrf().disable()// cors y crsf desactivos para conectar dos servicios en maquina local, desactivar en produccion
+                .cors().and().csrf().disable()// cors y crsf desactivos para conectar dos servicios en maquina local, elimanar esta configuracion en produccion
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
@@ -42,13 +42,6 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticated()
                 .and()
                 .httpBasic();
-    }
-
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
-        return source;
     }
 
     @Override
@@ -60,15 +53,15 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .roles(ApplicationUserRoles.ADMIN.name()) // ROLE_ADMINISTRATOR
                 .build();
 
-        UserDetails visitor = User.builder()
+/*        UserDetails visitor = User.builder()
                 .username("visitor1")
                 .password(passwordEncoder.encode("1234"))
                 .roles(ApplicationUserRoles.VISITOR.name())
-                .build();
+                .build();*/
 
         return new InMemoryUserDetailsManager(
-                masterUser,
-                visitor
+                masterUser
+                //visitor
         );
     };
 
