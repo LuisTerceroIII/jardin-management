@@ -1,6 +1,7 @@
 package com.jardin.api.services;
 
 import com.jardin.api.model.entities.Garment;
+import com.jardin.api.model.responses.CreateGarmentResponse;
 import com.jardin.api.repositories.GarmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -109,16 +110,21 @@ public class GarmentService {
         return new ResponseEntity<>(resultsOfQuery,HttpStatus.ACCEPTED);
     }
 
-    public ResponseEntity<Boolean> createGarment(Garment garment) {
-        boolean created = false;
+
+    public ResponseEntity<CreateGarmentResponse> createGarment(Garment garment) {
+        CreateGarmentResponse response = new CreateGarmentResponse();
         try {
             Garment save = garmentRepo.save(garment);
-            created = true;
-
+            response.setCreated(true);
+            response.setCreatedGarment(save);
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
+
+            response.setCreated(false);
+            response.setCreatedGarment(new Garment("", "", "", "", "", "", 0, ""));
+            return new ResponseEntity<>(response,HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(created,HttpStatus.CREATED);
+        return new ResponseEntity<>(response,HttpStatus.CREATED);
     }
 
     public ResponseEntity<Garment> deleteGarment(Long id) {

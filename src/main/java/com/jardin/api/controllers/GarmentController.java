@@ -2,6 +2,7 @@ package com.jardin.api.controllers;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jardin.api.model.entities.Garment;
+import com.jardin.api.model.responses.CreateGarmentResponse;
 import com.jardin.api.services.GarmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,8 +22,9 @@ public class GarmentController {
     private static final String reactURL = "http://localhost:3000";
 
     //Respuesta enviada cuando token es invalido
-    ResponseEntity<Garment> tokenInvalidGarmentResponse = new ResponseEntity<>(new Garment("", "", "", "", "", "", 0, ""), HttpStatus.UNAUTHORIZED);
-    ResponseEntity<List<Garment>> tokenInvalidArrayResponse = new ResponseEntity<>(new ArrayList<Garment>(), HttpStatus.UNAUTHORIZED);
+    ResponseEntity<Garment> invalidTokenOneGarmentResponse = new ResponseEntity<>(new Garment("", "", "", "", "", "", 0, ""), HttpStatus.UNAUTHORIZED);
+    ResponseEntity<List<Garment>> invalidTokenArrayResponse = new ResponseEntity<>(new ArrayList<Garment>(), HttpStatus.UNAUTHORIZED);
+    ResponseEntity<CreateGarmentResponse> invalidTokenCreateRequest = new ResponseEntity<>(new CreateGarmentResponse(false, new Garment("", "", "", "", "", "", 0, "")), HttpStatus.UNAUTHORIZED);
 
     @Autowired
     private GarmentController(GarmentService garmentService) {
@@ -36,7 +38,7 @@ public class GarmentController {
         if(isTokenValid) {
             return garmentService.getAll();
         } else {
-            return tokenInvalidArrayResponse;
+            return invalidTokenArrayResponse;
         }
     }
 
@@ -47,7 +49,7 @@ public class GarmentController {
         if(isTokenValid) {
             return garmentService.getByID(id);
         } else {
-            return tokenInvalidGarmentResponse;
+            return invalidTokenOneGarmentResponse;
         }
     }
 
@@ -59,7 +61,7 @@ public class GarmentController {
         if(isTokenValid) {
             return garmentService.getWithPagination(limit,offset);
         } else {
-            return tokenInvalidArrayResponse;
+            return invalidTokenArrayResponse;
         }
     }
 
@@ -78,20 +80,18 @@ public class GarmentController {
         if(isTokenValid) {
             return garmentService.searchGarment(gender, size, type, madeIn, mainMaterial, priceFrom, priceTo);
         } else {
-            return tokenInvalidArrayResponse;
+            return invalidTokenArrayResponse;
         }
     }
 
-    //TODO: Rotarnar ResponseEntity<CreateGarmentResponse>
-    // CreateGarmentResponse -> Garment garment, boolean created (retornar un objeto vacio si no se puede crear).
     @PostMapping("/post")
     @CrossOrigin(origins = reactURL)
-    private ResponseEntity<Boolean> createGarment(@RequestBody Garment garment, HttpServletResponse res) {
+    private ResponseEntity<CreateGarmentResponse> createGarment(@RequestBody Garment garment, HttpServletResponse res) {
         boolean isTokenValid = TokenVerify.isTokenValid(res);
         if(isTokenValid) {
             return garmentService.createGarment(garment);
         } else {
-            return new ResponseEntity<>(false,HttpStatus.UNAUTHORIZED);
+            return invalidTokenCreateRequest;
         }
     }
 
@@ -105,7 +105,7 @@ public class GarmentController {
         if(isTokenValid) {
             return garmentService.updateGarment(garment, id);
         } else {
-            return tokenInvalidGarmentResponse;
+            return invalidTokenOneGarmentResponse;
         }
     }
 
@@ -117,7 +117,7 @@ public class GarmentController {
         if(isTokenValid) {
             return garmentService.deleteGarment(id);
         } else {
-            return tokenInvalidGarmentResponse;
+            return invalidTokenOneGarmentResponse;
         }
     }
 
