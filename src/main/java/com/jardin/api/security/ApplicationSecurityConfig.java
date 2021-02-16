@@ -23,46 +23,51 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final PasswordEncoder passwordEncoder;
+  private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    public ApplicationSecurityConfig(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
+  @Autowired
+  public ApplicationSecurityConfig(PasswordEncoder passwordEncoder) {
+    this.passwordEncoder = passwordEncoder;
+  }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .cors().and().csrf().disable()// cors y crsf desactivos para conectar dos servicios en maquina local, elimanar esta configuracion en produccion
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeRequests()
-                .antMatchers("/management/jardin-api/**").hasRole(ApplicationUserRoles.ADMIN.name())
-                .anyRequest()
-                .authenticated()
-                .and()
-                .httpBasic();
-    }
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    http
+      .cors()
+      .and()
+      .csrf()
+      .disable() // cors y crsf desactivos para conectar dos servicios en maquina local, elimanar esta configuracion en produccion
+      .sessionManagement()
+      .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+      .and()
+      .authorizeRequests()
+      .antMatchers("/management/jardin-api/**")
+      .hasRole(ApplicationUserRoles.ADMIN.name())
+      .anyRequest()
+      .authenticated()
+      .and()
+      .httpBasic();
+  }
 
-    @Override
-    @Bean
-    protected UserDetailsService userDetailsService() {
-        UserDetails masterUser = User.builder()
-                .username("LuisTerceroIII")
-                .password(passwordEncoder.encode("5611858Morf"))
-                .roles(ApplicationUserRoles.ADMIN.name()) // ROLE_ADMINISTRATOR
-                .build();
+  @Override
+  @Bean
+  protected UserDetailsService userDetailsService() {
+    UserDetails masterUser = User
+      .builder()
+      .username("LuisTerceroIII")
+      .password(passwordEncoder.encode("5611858Morf"))
+      .roles(ApplicationUserRoles.ADMIN.name()) // ROLE_ADMINISTRATOR
+      .build();
 
-/*        UserDetails visitor = User.builder()
+    /*        UserDetails visitor = User.builder()
                 .username("visitor1")
                 .password(passwordEncoder.encode("1234"))
                 .roles(ApplicationUserRoles.VISITOR.name())
                 .build();*/
 
-        return new InMemoryUserDetailsManager(
-                masterUser
-                //visitor
-        );
-    };
-
+    return new InMemoryUserDetailsManager(
+      masterUser
+      //visitor
+    );
+  }
 }
