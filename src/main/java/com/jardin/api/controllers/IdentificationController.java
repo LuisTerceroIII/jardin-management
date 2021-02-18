@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("management/jardin-api/v1")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class IdentificationController {
 
   private final AuthenticationService authenticationService;
@@ -53,7 +53,6 @@ public class IdentificationController {
   }
 
   @PostMapping("/login")
-  @CrossOrigin(origins = "http://localhost:3000")
   private ResponseEntity<LoginResponse> loginWithToken(@RequestBody User user) {
     LoginResponse errorResponse = new LoginResponse(false, "0");
 

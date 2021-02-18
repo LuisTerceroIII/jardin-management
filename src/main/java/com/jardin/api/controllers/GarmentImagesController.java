@@ -56,7 +56,7 @@ public class GarmentImagesController {
           consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
           produces = MediaType.APPLICATION_JSON_VALUE
   )
-  @CrossOrigin(origins = "http://localhost:3000")
+  @CrossOrigin(origins = "*")
   private ResponseEntity<Garment> uploadImages(
           @PathVariable("id") Long id,
           @PathVariable("nroImage") int nroImage,

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("management/jardin-api/v1")
-@CrossOrigin("*")
+@CrossOrigin(origins = "*")
 public class GarmentController {
 
   private final GarmentService garmentService;
@@ -43,7 +43,7 @@ public class GarmentController {
   }
 
   @GetMapping("/garment")
-  @CrossOrigin(origins = reactURL)
+  @CrossOrigin(origins = "*")
   private ResponseEntity<List<Garment>> getAll(HttpServletResponse res) {
     boolean isTokenValid = TokenVerify.isTokenValid(res);
     if (isTokenValid) {
@@ -53,7 +53,7 @@ public class GarmentController {
     }
   }
 
-  @CrossOrigin(origins = reactURL)
+  @CrossOrigin(origins = "*")
   @GetMapping("/garment/{id}")
   private ResponseEntity<Garment> getById(
     @PathVariable("id") Long id,
@@ -68,7 +68,7 @@ public class GarmentController {
   }
 
   @GetMapping("/garment/{limit}/{offset}")
-  @CrossOrigin(origins = reactURL)
+  @CrossOrigin(origins = "*")
   private ResponseEntity<List<Garment>> getWithPagination(
     @PathVariable("limit") Integer limit,
     @PathVariable("offset") Integer offset,
@@ -82,35 +82,7 @@ public class GarmentController {
     }
   }
 
-/*  @CrossOrigin(origins = reactURL)
-  @GetMapping("/garments")
-  private ResponseEntity<List<Garment>> searchResolver(
-    @RequestParam(required = false) String gender,
-    @RequestParam(required = false) String size,
-    @RequestParam(required = false) String type,
-    @RequestParam(required = false) String madeIn,
-    @RequestParam(required = false) String mainMaterial,
-    @RequestParam(required = false) Integer priceFrom,
-    @RequestParam(required = false) Integer priceTo,
-    HttpServletResponse res
-  ) {
-    boolean isTokenValid = TokenVerify.isTokenValid(res);
-    if (isTokenValid) {
-      return garmentService.searchGarment(
-        gender,
-        size,
-        type,
-        madeIn,
-        mainMaterial,
-        priceFrom,
-        priceTo
-      );
-    } else {
-      return invalidTokenArrayResponse;
-    }
-  }*/
-
-  @CrossOrigin(origins = reactURL)
+  @CrossOrigin(origins = "*")
   @GetMapping("/garments/{limit}/{offset}")
   private ResponseEntity<List<Garment>> searchResolver2(
           @RequestParam(required = false) String gender,
@@ -141,7 +113,7 @@ public class GarmentController {
       return invalidTokenArrayResponse;
     }
   }
-  @CrossOrigin(origins = reactURL)
+  @CrossOrigin(origins = "*")
   @GetMapping("/garments/search/count-rows")
   private ResponseEntity<Long> countRowsSearchGarment(
           @RequestParam(required = false) String gender,
@@ -170,7 +142,7 @@ public class GarmentController {
   }
 
   @PostMapping("/garment")
-  @CrossOrigin(origins = reactURL)
+  @CrossOrigin(origins = "*")
   private ResponseEntity<CreateGarmentResponse> createGarment(
     @RequestBody Garment garment,
     HttpServletResponse res
@@ -202,7 +174,7 @@ public class GarmentController {
 
   //Este metodo deberia ser un delete, sin embargo el metodo DELETE me enviaba un error cuando lo enviada desde axios.
   @DeleteMapping("/garment/{id}")
-  @CrossOrigin(origins = reactURL)
+  @CrossOrigin(origins = "*")
   private ResponseEntity<Garment> deleteGarmentById(
     @PathVariable("id") Long id,
     HttpServletResponse res
