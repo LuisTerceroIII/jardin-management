@@ -5,6 +5,7 @@ import com.jardin.api.model.entities.pojos.post.UserToLogout;
 import com.jardin.api.model.responses.LoginResponse;
 import com.jardin.api.repositories.UserRepository;
 import com.jardin.api.services.AuthenticationService;
+import com.jardin.api.services.TokenVerify;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import java.time.LocalDate;
@@ -12,7 +13,10 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 import javax.persistence.EntityNotFoundException;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -21,7 +25,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("management/jardin-api/v1")
 @CrossOrigin(origins = "*")
-public class IdentificationController {
+public class IdentificationController  extends SpringBootServletInitializer {
 
   private final AuthenticationService authenticationService;
   private final UserRepository userRepository;
@@ -82,5 +86,15 @@ public class IdentificationController {
       return new ResponseEntity<>(loginResponse, HttpStatus.ACCEPTED);
     }
     return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+  }
+
+  @GetMapping("/validateSession")
+  public ResponseEntity<Boolean> validateSession(HttpServletResponse res) {
+    boolean isTokenValid = TokenVerify.isTokenValid(res);
+    if(isTokenValid) {
+      return new ResponseEntity<>(true,HttpStatus.ACCEPTED);
+    } else {
+      return new ResponseEntity<>(false, HttpStatus.UNAUTHORIZED);
+    }
   }
 }
