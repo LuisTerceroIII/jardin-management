@@ -14,6 +14,12 @@
     <name>api</name>
     <description>Jardin Api Service</description>
 
+
+    <properties>
+        <java.version>11</java.version>
+    </properties>
+
+
     <dependencies>
 
         <dependency>
