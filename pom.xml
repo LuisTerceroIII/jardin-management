@@ -49,6 +49,12 @@
             <scope>provided</scope>
         </dependency>
 
+  <!--      <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-jdbc</artifactId>
+
+        </dependency>-->
+
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -99,11 +105,7 @@
             <version>2.9.4</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>tomcat-jdbc</artifactId>
 
-        </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
