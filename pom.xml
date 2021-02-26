@@ -111,15 +111,15 @@
 
     <build>
         <plugins>
-   <!--         <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>-->
-
             <plugin>
+                  <groupId>org.springframework.boot</groupId>
+                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+         <!--   <plugin>
                 <groupId>com.hubspot.maven.plugins</groupId>
                 <artifactId>prettier-maven-plugin</artifactId>
-                <!-- Find the latest version at https://github.com/jhipster/prettier-java/releases -->
+                &lt;!&ndash; Find the latest version at https://github.com/jhipster/prettier-java/releases &ndash;&gt;
                 <version>0.8</version>
             </plugin>
 
@@ -143,7 +143,7 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
 
         </plugins>
     </build>
