@@ -18,9 +18,7 @@
     <description>Jardin Api Service</description>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>11.0.8</java.version>
+        <java.version>11</java.version>
     </properties>
 
     <dependencies>
