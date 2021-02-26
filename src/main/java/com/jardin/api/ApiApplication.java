@@ -23,14 +23,16 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EntityScan({ "com.jardin.api.model.entities", "com.jardin.api.services" })
 public class ApiApplication extends SpringBootServletInitializer   {
 
-  public static void main(String[] args) {
-    SpringApplication.run(ApiApplication.class, args);
-  }
 
   @Override
   protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
     return builder.sources(ApiApplication.class);
   }
+
+  public static void main(String[] args) {
+    SpringApplication.run(ApiApplication.class, args);
+  }
+
 
 
 }
