@@ -8,7 +8,7 @@ import com.jardin.api.services.TokenVerify;
 import java.util.*;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("management/jardin-api/v1")
 @CrossOrigin(origins = "*")
-public class GarmentController extends SpringBootServletInitializer {
+public class GarmentController{
 
   private final GarmentService garmentService;
   private static final String reactURL = "http://localhost:3000";

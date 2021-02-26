@@ -19,19 +19,11 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaAuditing
 @EnableJpaRepositories({ "com.jardin.api.repositories" })
 @EntityScan({ "com.jardin.api.model.entities", "com.jardin.api.services" })
-public class ApiApplication extends SpringBootServletInitializer implements CommandLineRunner {
-
-  @Autowired
-  GarmentRepository garmentRepo;
-
-  @Autowired
-  ImagesRepository imagesRepository;
+public class ApiApplication extends SpringBootServletInitializer {
 
   public static void main(String[] args) {
     SpringApplication.run(ApiApplication.class, args);
   }
 
-  @Override
-  @Transactional
-  public void run(String... args) throws Exception {}
+
 }
