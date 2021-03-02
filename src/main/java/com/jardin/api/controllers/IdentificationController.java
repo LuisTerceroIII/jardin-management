@@ -1,5 +1,6 @@
 package com.jardin.api.controllers;
 
+import com.jardin.api.exceptions.controllerExceptions.InvalidTokenException;
 import com.jardin.api.model.entities.User;
 
 import com.jardin.api.model.responses.LoginResponse;
@@ -91,7 +92,7 @@ public class IdentificationController {
         if (isTokenValid) {
             return new ResponseEntity<>(true, HttpStatus.ACCEPTED);
         } else {
-            return new ResponseEntity<>(false, HttpStatus.UNAUTHORIZED);
+            throw new InvalidTokenException();
         }
     }
 }

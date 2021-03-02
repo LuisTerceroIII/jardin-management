@@ -21,8 +21,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaAuditing
 @EnableJpaRepositories({ "com.jardin.api.repositories" })
 @EntityScan({ "com.jardin.api.model.entities", "com.jardin.api.services" })
-@ComponentScan(basePackages = {"com.jardin.api.controllers", "com.jardin.api.services","com.jardin.api.config",
-        "com.jardin.api.security", "com.jardin.api.filters"})
 public class ApiApplication extends SpringBootServletInitializer   {
 
   @Override

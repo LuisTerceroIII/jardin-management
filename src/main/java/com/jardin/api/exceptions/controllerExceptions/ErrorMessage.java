@@ -1,15 +1,20 @@
 package com.jardin.api.exceptions.controllerExceptions;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 public class ErrorMessage {
+  private final String exception;
+  private final String message;
+  private final String path;
+  private final int status;
+  private final String error;
 
-  private String exception;
-  private String message;
-  private String path;
-
-  public ErrorMessage(Exception exception, String path) {
+  public ErrorMessage(Exception exception, int status, String path, String error) {
     this.exception = exception.getClass().getSimpleName();
+    this.status = status;
     this.message = exception.getMessage();
     this.path = path;
+    this.error = error;
   }
 
   public String getException() {
@@ -20,24 +25,28 @@ public class ErrorMessage {
     return message;
   }
 
+  public String getError() {
+    return error;
+  }
+
+  public int getStatus() {
+    return status;
+  }
+
   public String getPath() {
     return path;
   }
 
+
+
   @Override
   public String toString() {
-    return (
-      "ErrorMessage{" +
-      "exception='" +
-      exception +
-      '\'' +
-      ", message='" +
-      message +
-      '\'' +
-      ", path='" +
-      path +
-      '\'' +
-      '}'
-    );
+    return "ErrorMessage{" +
+            "exception='" + exception + '\'' +
+            ", message='" + message + '\'' +
+            ", error='" + error + '\'' +
+            ", status='" + status + '\'' +
+            ", path='" + path + '\'' +
+            '}';
   }
 }

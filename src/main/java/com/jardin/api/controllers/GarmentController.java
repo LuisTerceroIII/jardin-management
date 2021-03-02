@@ -1,6 +1,8 @@
 package com.jardin.api.controllers;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.jardin.api.exceptions.controllerExceptions.InvalidTokenException;
+import com.jardin.api.exceptions.controllerExceptions.NoSuchElementFoundException;
 import com.jardin.api.model.entities.Garment;
 import com.jardin.api.model.responses.CreateGarmentResponse;
 import com.jardin.api.services.GarmentService;
@@ -19,25 +21,6 @@ import org.springframework.web.bind.annotation.*;
 public class GarmentController{
 
   private final GarmentService garmentService;
-  private static final String reactURL = "http://localhost:3000";
-
-
-  //Respuesta enviada cuando token es invalido
-  ResponseEntity<Garment> invalidTokenOneGarmentResponse = new ResponseEntity<>(
-    new Garment("", "", "", "", "", "", 0, ""),
-    HttpStatus.UNAUTHORIZED
-  );
-  ResponseEntity<List<Garment>> invalidTokenArrayResponse = new ResponseEntity<>(
-    new ArrayList<Garment>(),
-    HttpStatus.UNAUTHORIZED
-  );
-  ResponseEntity<CreateGarmentResponse> invalidTokenCreateRequest = new ResponseEntity<>(
-    new CreateGarmentResponse(
-      false,
-      new Garment("", "", "", "", "", "", 0, "")
-    ),
-    HttpStatus.UNAUTHORIZED
-  );
 
   @Autowired
   private GarmentController(GarmentService garmentService) {
@@ -51,7 +34,7 @@ public class GarmentController{
     if (isTokenValid) {
       return garmentService.getAll();
     } else {
-      return invalidTokenArrayResponse;
+     throw new InvalidTokenException();
     }
   }
 
@@ -65,7 +48,7 @@ public class GarmentController{
     if (isTokenValid) {
       return garmentService.getByID(id);
     } else {
-      return invalidTokenOneGarmentResponse;
+      throw new InvalidTokenException();
     }
   }
 
@@ -80,7 +63,7 @@ public class GarmentController{
     if (isTokenValid) {
       return garmentService.getWithPagination(limit, offset);
     } else {
-      return invalidTokenArrayResponse;
+      throw new InvalidTokenException();
     }
   }
 
@@ -112,7 +95,7 @@ public class GarmentController{
               offset
       );
     } else {
-      return invalidTokenArrayResponse;
+      throw new InvalidTokenException();
     }
   }
   @CrossOrigin(origins = "*")
@@ -139,7 +122,7 @@ public class GarmentController{
               priceTo
       );
     } else {
-      return new ResponseEntity<>(0L,HttpStatus.UNAUTHORIZED);
+      throw new InvalidTokenException();
     }
   }
 
@@ -153,11 +136,11 @@ public class GarmentController{
     if (isTokenValid) {
       return garmentService.createGarment(garment);
     } else {
-      return invalidTokenCreateRequest;
+      throw new InvalidTokenException();
     }
   }
 
-  //Metodo put, que pasa por POST, ya que PUT enviaba error desde exios, se cambio para poder hacer la peticion.
+  //Metodo put, que pasa por POST, ya que PUT enviaba error desde axios, se cambio para poder hacer la peticion.
   @PostMapping("/garment/{id}")
   @CrossOrigin(origins = "*")
   @JsonIgnore
@@ -170,7 +153,7 @@ public class GarmentController{
     if (isTokenValid) {
       return garmentService.updateGarment(garment, id);
     } else {
-      return invalidTokenOneGarmentResponse;
+      throw new InvalidTokenException();
     }
   }
 
@@ -185,7 +168,7 @@ public class GarmentController{
     if (isTokenValid) {
       return garmentService.deleteGarment(id);
     } else {
-      return invalidTokenOneGarmentResponse;
+      throw new InvalidTokenException();
     }
   }
 }
