@@ -2,6 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -11,8 +12,14 @@
     <groupId>com.jardin</groupId>
     <artifactId>api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
     <name>api</name>
     <description>Jardin Api Service</description>
+
+    <properties>
+        <java.version>11</java.version>
+    </properties>
 
     <dependencies>
 
@@ -37,10 +44,23 @@
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
 
+<!--        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>-->
+
+  <!--      <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-jdbc</artifactId>
+
+        </dependency>-->
+
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.2.16</version>
+<!--            <version>42.2.16</version>-->
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
@@ -86,10 +106,7 @@
             <version>2.9.4</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>tomcat-jdbc</artifactId>
-        </dependency>
+
 
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -98,21 +115,38 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.8.1</version>
+            <type>maven-plugin</type>
+        </dependency>
+
 
     </dependencies>
 
     <build>
         <plugins>
+
+
+
+
+
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-
-            <plugin>
-                <groupId>com.hubspot.maven.plugins</groupId>
-                <artifactId>prettier-maven-plugin</artifactId>
-                <!-- Find the latest version at https://github.com/jhipster/prettier-java/releases -->
-                <version>0.8</version>
+                <version>2.0.6.RELEASE</version>
+                <configuration>
+                    <mainClass>controller.Application</mainClass>
+                    <layout>ZIP</layout>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>
@@ -127,7 +161,7 @@
                                 <artifactItem>
                                     <groupId>com.heroku</groupId>
                                     <artifactId>webapp-runner</artifactId>
-                                    <version>9.0.41.0</version>
+                                    <version>9.0.30.0</version>
                                     <destFileName>webapp-runner.jar</destFileName>
                                 </artifactItem>
                             </artifactItems>
@@ -135,6 +169,7 @@
                     </execution>
                 </executions>
             </plugin>
+
 
         </plugins>
     </build>
