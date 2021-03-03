@@ -263,7 +263,6 @@ public class GarmentImagesService {
         System.out.println("No hay images!!!!!");
         return imagesNotFound;
       }
-      System.out.println("No hay images y estoy aca afuera :|  ");
       ArrayList<DeleteObjectsRequest.KeyVersion> keys = new ArrayList<>();
       if(images.getLinkImage1() != null) {
         keys.add(new DeleteObjectsRequest.KeyVersion(id.toString() +"/"+images.getLinkImage1()));
@@ -288,7 +287,7 @@ public class GarmentImagesService {
       if(delete) {
         return new ResponseEntity<>(garment, HttpStatus.OK);
       } else {
-        return new ResponseEntity<>(garment, HttpStatus.INTERNAL_SERVER_ERROR);
+          return new ResponseEntity<>(garment, HttpStatus.INTERNAL_SERVER_ERROR);
       }
     } catch (EntityNotFoundException entityNotFoundException) {
       System.out.println(entityNotFoundException.getMessage());

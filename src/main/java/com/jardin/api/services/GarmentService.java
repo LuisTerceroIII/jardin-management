@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 public class GarmentService {
 
     GarmentRepository garmentRepo;
-
     ImagesRepository imagesRepository;
 
     @Autowired
@@ -54,10 +53,10 @@ public class GarmentService {
             Garment save = garmentRepo.save(garment);
             response.setCreated(true);
             response.setCreatedGarment(save);
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
         } catch (Exception e) {
             throw new ResourceCreationException(garment.getClass().getSimpleName());
         }
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     public ResponseEntity<Garment> deleteGarment(Long id) {
@@ -82,52 +81,44 @@ public class GarmentService {
             Garment toUpdate = garmentRepo.getOne(id);
             System.out.println(toUpdate); // Si no hay reesultado salta EntityNotFoundException
 
-            if (
-                    !toUpdate.getType().equals(garment.getType()) &&
-                            (garment.getType() != null && !garment.getType().equals(""))
-            ) {
+            if (!toUpdate.getType().equals(garment.getType()) &&
+                            (garment.getType() != null && !garment.getType().equals(""))) {
                 toUpdate.setType(garment.getType());
             }
-            if (
-                    !toUpdate.getComment().equals(garment.getComment()) &&
-                            (garment.getComment() != null && !garment.getComment().equals(""))
-            ) {
+            if (!toUpdate.getComment().equals(garment.getComment()) &&
+                            (garment.getComment() != null && !garment.getComment().equals(""))) {
                 toUpdate.setComment(garment.getComment());
             }
-            if (
-                    !toUpdate.getGender().equals(garment.getGender()) &&
-                            garment.getGender() != null &&
-                            !garment.getGender().equals("")
+
+            if (!toUpdate.getGender().equals(garment.getGender()) && garment.getGender() != null && !garment.getGender().equals("")
             ) {
                 toUpdate.setGender(garment.getGender());
             }
-            if (
-                    !toUpdate.getMadeIn().equals(garment.getMadeIn()) &&
+
+            if (!toUpdate.getMadeIn().equals(garment.getMadeIn()) &&
                             (garment.getMadeIn() != null && !garment.getMadeIn().equals(""))
             ) {
                 toUpdate.setMadeIn(garment.getMadeIn());
             }
-            if (
-                    !toUpdate.getMainColor().equals(garment.getMainColor()) &&
+
+            if (!toUpdate.getMainColor().equals(garment.getMainColor()) &&
                             (garment.getMainColor() != null && garment.getMainColor().equals(""))
             ) {
                 toUpdate.setMainColor(garment.getMainColor());
             }
-            if (
-                    !toUpdate.getMainMaterial().equals(garment.getMainMaterial()) &&
-                            (
-                                    garment.getMainMaterial() != null &&
-                                            !garment.getMainMaterial().equals("")
-                            )
+
+            if (!toUpdate.getMainMaterial().equals(garment.getMainMaterial()) &&
+                            (garment.getMainMaterial() != null && !garment.getMainMaterial().equals(""))
             ) {
                 toUpdate.setMainMaterial(garment.getMainMaterial());
             }
-            if (
-                    !toUpdate.getPrice().equals(garment.getPrice()) &&
+
+            if (!toUpdate.getPrice().equals(garment.getPrice()) &&
                             (garment.getPrice() != null && !garment.getPrice().equals(-1))
             ) {
                 toUpdate.setPrice(garment.getPrice());
             }
+
             if (
                     !toUpdate.getSize().equals(garment.getSize()) &&
                             (garment.getSize() != null && !garment.getSize().equals(""))
@@ -149,8 +140,10 @@ public class GarmentService {
 
             return new ResponseEntity<>(garmentRepo.getOne(id), HttpStatus.ACCEPTED);
         } catch (EntityNotFoundException exception) {
+            // retorna 404
             throw new NoSuchElementFoundException(id.toString());
         } catch (Exception e) {
+            // retorna 500
             throw new ResourceUpdateException(Garment.class.getSimpleName(),id);
         }
     }
