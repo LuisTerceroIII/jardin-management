@@ -1,5 +1,8 @@
-package com.jardin.api.exceptions.controllerExceptions;
+package com.jardin.api.exceptions;
 
+import com.jardin.api.exceptions.controllers.*;
+import com.jardin.api.exceptions.customMessages.ErrorMessage;
+import com.jardin.api.exceptions.token.InvalidTokenException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -54,7 +57,7 @@ public class ApiHandlerException extends ResponseEntityExceptionHandler {
     public ResponseEntity<ErrorMessage> handleAllUncaughtException(
             Exception exception,
             HttpServletRequest request){
-        return new ResponseEntity<ErrorMessage>(new ErrorMessage(exception,HttpStatus.INTERNAL_SERVER_ERROR.value(), request.getRequestURI(), "INTERNAL SERVER ERROR"),HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(new ErrorMessage(exception, HttpStatus.INTERNAL_SERVER_ERROR.value(), request.getRequestURI(), "INTERNAL SERVER ERROR"), HttpStatus.INTERNAL_SERVER_ERROR);
 
     }
 

@@ -1,6 +1,6 @@
-package com.jardin.api.model.responses;
+package com.jardin.api.controllers.garment.especialResponses;
 
-import com.jardin.api.model.entities.Garment;
+import com.jardin.api.models.entities.Garment;
 
 public class CreateGarmentResponse {
 

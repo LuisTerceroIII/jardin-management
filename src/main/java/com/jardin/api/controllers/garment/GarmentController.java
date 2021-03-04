@@ -1,17 +1,15 @@
-package com.jardin.api.controllers;
+package com.jardin.api.controllers.garment;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.jardin.api.exceptions.controllerExceptions.InvalidTokenException;
-import com.jardin.api.exceptions.controllerExceptions.NoSuchElementFoundException;
-import com.jardin.api.model.entities.Garment;
-import com.jardin.api.model.responses.CreateGarmentResponse;
+import com.jardin.api.exceptions.token.InvalidTokenException;
+import com.jardin.api.models.entities.Garment;
+import com.jardin.api.controllers.garment.especialResponses.CreateGarmentResponse;
 import com.jardin.api.services.GarmentService;
-import com.jardin.api.services.TokenVerify;
+import com.jardin.api.utilsFunctions.JwtTokenUtils;
 import java.util.*;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +20,8 @@ public class GarmentController{
 
   private final GarmentService garmentService;
 
+
+
   @Autowired
   private GarmentController(GarmentService garmentService) {
     this.garmentService = garmentService;
@@ -30,7 +30,7 @@ public class GarmentController{
   @GetMapping("/garment")
   @CrossOrigin(origins = "*")
   private ResponseEntity<List<Garment>> getAll(HttpServletResponse res) {
-    boolean isTokenValid = TokenVerify.isTokenValid(res);
+    boolean isTokenValid = JwtTokenUtils.isTokenValid(res);
     if (isTokenValid) {
       return garmentService.getAll();
     } else {
@@ -44,7 +44,7 @@ public class GarmentController{
     @PathVariable("id") Long id,
     HttpServletResponse res
   ) {
-    boolean isTokenValid = TokenVerify.isTokenValid(res);
+    boolean isTokenValid = JwtTokenUtils.isTokenValid(res);
     if (isTokenValid) {
       return garmentService.getByID(id);
     } else {
@@ -59,7 +59,7 @@ public class GarmentController{
     @PathVariable("offset") Integer offset,
     HttpServletResponse res
   ) {
-    boolean isTokenValid = TokenVerify.isTokenValid(res);
+    boolean isTokenValid = JwtTokenUtils.isTokenValid(res);
     if (isTokenValid) {
       return garmentService.getWithPagination(limit, offset);
     } else {
@@ -81,7 +81,7 @@ public class GarmentController{
           @PathVariable("offset") Integer offset,
           HttpServletResponse res
   ) {
-    boolean isTokenValid = TokenVerify.isTokenValid(res);
+    boolean isTokenValid = JwtTokenUtils.isTokenValid(res);
     if (isTokenValid) {
       return garmentService.searchGarment(
               gender,
@@ -110,7 +110,7 @@ public class GarmentController{
           @RequestParam(required = false) Integer priceTo,
           HttpServletResponse res
   ) {
-    boolean isTokenValid = TokenVerify.isTokenValid(res);
+    boolean isTokenValid = JwtTokenUtils.isTokenValid(res);
     if (isTokenValid) {
       return garmentService.countRowsSearchGarment(
               gender,
@@ -132,7 +132,7 @@ public class GarmentController{
     @RequestBody Garment garment,
     HttpServletResponse res
   ) {
-    boolean isTokenValid = TokenVerify.isTokenValid(res);
+    boolean isTokenValid = JwtTokenUtils.isTokenValid(res);
     if (isTokenValid) {
       return garmentService.createGarment(garment);
     } else {
@@ -149,7 +149,7 @@ public class GarmentController{
     @PathVariable("id") Long id,
     HttpServletResponse res
   ) {
-    boolean isTokenValid = TokenVerify.isTokenValid(res);
+    boolean isTokenValid = JwtTokenUtils.isTokenValid(res);
     if (isTokenValid) {
       return garmentService.updateGarment(garment, id);
     } else {
@@ -164,7 +164,7 @@ public class GarmentController{
     @PathVariable("id") Long id,
     HttpServletResponse res
   ) {
-    boolean isTokenValid = TokenVerify.isTokenValid(res);
+    boolean isTokenValid = JwtTokenUtils.isTokenValid(res);
     if (isTokenValid) {
       return garmentService.deleteGarment(id);
     } else {

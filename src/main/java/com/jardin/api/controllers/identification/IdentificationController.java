@@ -1,17 +1,13 @@
-package com.jardin.api.controllers;
+package com.jardin.api.controllers.identification;
 
-import com.jardin.api.exceptions.controllerExceptions.InvalidTokenException;
-import com.jardin.api.model.entities.User;
+import com.jardin.api.exceptions.token.InvalidTokenException;
+import com.jardin.api.models.entities.User;
 
-import com.jardin.api.model.responses.LoginResponse;
+import com.jardin.api.controllers.identification.especialResponses.LoginResponse;
 import com.jardin.api.repositories.UserRepository;
 import com.jardin.api.services.AuthenticationService;
-import com.jardin.api.services.TokenVerify;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
+import com.jardin.api.utilsFunctions.JwtTokenUtils;
 
-import java.time.LocalDate;
-import java.util.Date;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,16 +66,7 @@ public class IdentificationController {
         );
 
         if (correctPassword) {
-            String secretKey =
-                    "asegurandoJardinAPI2021LuisHECTOResPINOZAnaVaRRete9488888";
-            String sessionToken = Jwts
-                    .builder()
-                    .setSubject("Jardin")
-                    .setIssuedAt(new Date())
-                    .setExpiration(java.sql.Date.valueOf(LocalDate.now().plusDays(1)))
-                    .signWith(Keys.hmacShaKeyFor(secretKey.getBytes()))
-                    .compact();
-
+            String sessionToken = JwtTokenUtils.generateJwtToken();
             LoginResponse loginResponse = new LoginResponse(true, sessionToken);
             return new ResponseEntity<>(loginResponse, HttpStatus.ACCEPTED);
         }
@@ -88,7 +75,7 @@ public class IdentificationController {
 
     @GetMapping("/validateSession")
     public ResponseEntity<Boolean> validateSession(HttpServletResponse res) {
-        boolean isTokenValid = TokenVerify.isTokenValid(res);
+        boolean isTokenValid = JwtTokenUtils.isTokenValid(res);
         if (isTokenValid) {
             return new ResponseEntity<>(true, HttpStatus.ACCEPTED);
         } else {

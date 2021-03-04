@@ -1,5 +1,6 @@
 package com.jardin.api.security;
 
+import com.jardin.api.config.MasterUser;
 import com.jardin.api.security.rolesAndPermissions.ApplicationUserRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -36,7 +37,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
       .cors()
       .and()
       .csrf()
-      .disable() // cors y crsf desactivos para conectar dos servicios en maquina local, elimanar esta configuracion en produccion
+      .disable() // cors y crsf desactivados
       .sessionManagement()
       .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
       .and()
@@ -54,20 +55,13 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
   protected UserDetailsService userDetailsService() {
     UserDetails masterUser = User
       .builder()
-      .username("LuisTerceroIII")
-      .password(passwordEncoder.encode("5611858Morf"))
+      .username(MasterUser.getUsername())
+      .password(passwordEncoder.encode(MasterUser.getPassword()))
       .roles(ApplicationUserRoles.ADMIN.name()) // ROLE_ADMINISTRATOR
       .build();
-
-    /*        UserDetails visitor = User.builder()
-                .username("visitor1")
-                .password(passwordEncoder.encode("1234"))
-                .roles(ApplicationUserRoles.VISITOR.name())
-                .build();*/
-
     return new InMemoryUserDetailsManager(
       masterUser
-      //visitor
+      //,visitor
     );
   }
 }

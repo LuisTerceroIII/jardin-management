@@ -4,5 +4,10 @@
       "name": "server.context-path",
       "type": "java.lang.String",
       "description": "Description for server.context-path."
-  }
-] }
+    },
+    {
+      "name": "jws-token-key",
+      "type": "java.lang.String",
+      "description": "Description for jws-token-key."
+    }
+  ] }

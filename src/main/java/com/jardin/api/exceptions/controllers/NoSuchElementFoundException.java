@@ -1,4 +1,4 @@
-package com.jardin.api.exceptions.controllerExceptions;
+package com.jardin.api.exceptions.controllers;
 
 
 

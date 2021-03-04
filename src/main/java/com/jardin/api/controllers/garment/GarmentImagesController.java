@@ -1,10 +1,10 @@
-package com.jardin.api.controllers;
+package com.jardin.api.controllers.garment;
 
-import com.jardin.api.exceptions.controllerExceptions.InvalidTokenException;
-import com.jardin.api.model.entities.Garment;
-import com.jardin.api.model.entities.Images;
+import com.jardin.api.exceptions.token.InvalidTokenException;
+import com.jardin.api.models.entities.Garment;
+import com.jardin.api.models.entities.Images;
 import com.jardin.api.services.GarmentImagesService;
-import com.jardin.api.services.TokenVerify;
+import com.jardin.api.utilsFunctions.JwtTokenUtils;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -29,7 +29,7 @@ public class GarmentImagesController {
 
     @GetMapping("/{id}")
     private ResponseEntity<Images> getAllLinks(@PathVariable("id") Long id, HttpServletResponse res) {
-        boolean isTokenValid = TokenVerify.isTokenValid(res);
+        boolean isTokenValid = JwtTokenUtils.isTokenValid(res);
         if (isTokenValid) {
             return garmentImagesService.downloadAllLink(id);
         } else {
@@ -43,7 +43,7 @@ public class GarmentImagesController {
             @PathVariable("nroImage") int nroImage,
             HttpServletResponse res
     ) {
-        boolean isTokenValid = TokenVerify.isTokenValid(res);
+        boolean isTokenValid = JwtTokenUtils.isTokenValid(res);
         if (isTokenValid) {
             return garmentImagesService.downloadLink(id, nroImage);
         } else {
@@ -63,7 +63,7 @@ public class GarmentImagesController {
             @RequestParam MultipartFile file,
             HttpServletResponse res
     ) {
-        boolean isTokenValid = TokenVerify.isTokenValid(res);
+        boolean isTokenValid = JwtTokenUtils.isTokenValid(res);
         if (isTokenValid) {
             return garmentImagesService.uploadGarmentImage(id, nroImage, file);
         } else {
@@ -77,7 +77,7 @@ public class GarmentImagesController {
             @PathVariable("nroImage") int nroImage,
             HttpServletResponse res
     ) {
-        boolean isTokenValid = TokenVerify.isTokenValid(res);
+        boolean isTokenValid = JwtTokenUtils.isTokenValid(res);
         if (isTokenValid) {
             return garmentImagesService.deleteGarmentImage(id, nroImage);
         } else {
@@ -90,7 +90,7 @@ public class GarmentImagesController {
             @PathVariable("id") Long id,
             HttpServletResponse res
     ) {
-        boolean isTokenValid = TokenVerify.isTokenValid(res);
+        boolean isTokenValid = JwtTokenUtils.isTokenValid(res);
         if (isTokenValid) {
             return garmentImagesService.deleteGarmentImages(id);
         } else {

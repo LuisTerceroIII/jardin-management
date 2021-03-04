@@ -1,4 +1,4 @@
-package com.jardin.api.model.responses;
+package com.jardin.api.controllers.identification.especialResponses;
 
 public class LoginResponse {
 

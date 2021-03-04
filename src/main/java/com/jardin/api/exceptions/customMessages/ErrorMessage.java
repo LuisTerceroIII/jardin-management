@@ -1,6 +1,4 @@
-package com.jardin.api.exceptions.controllerExceptions;
-
-import com.fasterxml.jackson.annotation.JsonInclude;
+package com.jardin.api.exceptions.customMessages;
 
 public class ErrorMessage {
   private final String exception;
