@@ -1,4 +1,4 @@
-package com.jardin.api.exceptions.controllerExceptions;
+package com.jardin.api.exceptions.controllers;
 
 public class ResourceUpdateException extends RuntimeException {
     private static final String detail = "Fail to update resource : ";

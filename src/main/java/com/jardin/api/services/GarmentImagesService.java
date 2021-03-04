@@ -1,14 +1,13 @@
 package com.jardin.api.services;
 
 import com.amazonaws.services.s3.model.DeleteObjectsRequest;
-import com.amazonaws.services.s3.model.DeleteObjectsResult;
-import com.jardin.api.buckets.BucketName;
-import com.jardin.api.model.entities.Garment;
-import com.jardin.api.model.entities.Images;
+import com.jardin.api.config.amazonS3.buckets.GarmentImagesBucket;
+import com.jardin.api.config.amazonS3.AmazonS3Config;
+import com.jardin.api.models.entities.Garment;
+import com.jardin.api.models.entities.Images;
 import com.jardin.api.repositories.GarmentRepository;
 import com.jardin.api.repositories.ImagesRepository;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.*;
 import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,7 @@ public class GarmentImagesService {
   private final ImagesRepository imagesRepository;
   private final S3FileStore s3FileStore;
 
-  private final String bucketName = BucketName.IMAGE_BUCKET.getBucketName();
+  private final String bucketName = GarmentImagesBucket.IMAGE_BUCKET.getBucketName();
   ResponseEntity<Garment> garmentNotFound = new ResponseEntity<>(
     new Garment("", "", "", "", "", "", 0, ""),
     HttpStatus.NOT_FOUND
@@ -118,7 +117,7 @@ public class GarmentImagesService {
 
   public ResponseEntity<String> downloadLink(Long id, int imageNumber) {
     try {
-      String region = "s3-sa-east-1";
+      String region = AmazonS3Config.getRegion();
       String amazon = "amazonaws.com";
       String fileName = "";
 
@@ -296,10 +295,9 @@ public class GarmentImagesService {
   }
 
   public static String pathMaker(String filename,String id) {
-    String bucketName = BucketName.IMAGE_BUCKET.getBucketName();
-    String region = "s3-sa-east-1";
+    String bucketName = GarmentImagesBucket.IMAGE_BUCKET.getBucketName();
+    String region = AmazonS3Config.getRegion();
     String amazon = "amazonaws.com";
-    String fileName = "";
     return "https://" +
             bucketName +
             "." +

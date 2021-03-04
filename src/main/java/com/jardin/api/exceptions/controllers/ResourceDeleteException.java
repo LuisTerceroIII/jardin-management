@@ -1,4 +1,4 @@
-package com.jardin.api.exceptions.controllerExceptions;
+package com.jardin.api.exceptions.controllers;
 
 public class ResourceDeleteException extends RuntimeException {
     private static final String detail = "Fail to delete resource : ";

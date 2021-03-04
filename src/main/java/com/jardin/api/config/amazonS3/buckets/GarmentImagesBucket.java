@@ -1,11 +1,11 @@
-package com.jardin.api.buckets;
+package com.jardin.api.config.amazonS3.buckets;
 
-public enum BucketName {
+public enum GarmentImagesBucket {
   IMAGE_BUCKET("jardin-products-images");
 
   private final String bucketName;
 
-  BucketName(String bucketName) {
+  GarmentImagesBucket(String bucketName) {
     this.bucketName = bucketName;
   }
 

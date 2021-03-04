@@ -1,4 +1,4 @@
-package com.jardin.api.exceptions.controllerExceptions;
+package com.jardin.api.exceptions.controllers;
 
 public class EmptyResourceListException extends RuntimeException {
 

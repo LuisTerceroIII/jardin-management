@@ -1,4 +1,4 @@
-package com.jardin.api.model.entities;
+package com.jardin.api.models.entities;
 
 import javax.persistence.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;

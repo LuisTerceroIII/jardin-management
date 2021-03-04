@@ -1,9 +1,9 @@
 package com.jardin.api.services;
 
-import com.jardin.api.exceptions.controllerExceptions.*;
-import com.jardin.api.model.entities.Garment;
-import com.jardin.api.model.entities.Images;
-import com.jardin.api.model.responses.CreateGarmentResponse;
+import com.jardin.api.exceptions.controllers.*;
+import com.jardin.api.models.entities.Garment;
+import com.jardin.api.models.entities.Images;
+import com.jardin.api.controllers.garment.especialResponses.CreateGarmentResponse;
 import com.jardin.api.repositories.GarmentRepository;
 
 import java.util.ArrayList;
